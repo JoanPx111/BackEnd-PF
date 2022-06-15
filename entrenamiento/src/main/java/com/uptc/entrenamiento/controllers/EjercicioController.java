@@ -22,6 +22,10 @@ public class EjercicioController {
     public ResponseEntity<Iterable<Ejercicio>> findByAll() {
         return ResponseEntity.status(HttpStatus.OK).body(this.iEjercicioService.findByAll());
     }
+    @GetMapping("/{id}")
+    public ResponseEntity<Ejercicio> findById(@PathVariable Long id) {
+        return ResponseEntity.status(HttpStatus.OK).body(this.iEjercicioService.findById(id).get());
+    }
 
     @GetMapping(params = {"page", "size"})
     public ResponseEntity<PageResponse<Ejercicio>> findByAllPage(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size) {
