@@ -6,7 +6,6 @@ import com.uptc.entrenamiento.repositories.EjercicioRepository;
 import com.uptc.entrenamiento.utils.ErrorDescription;
 import com.uptc.entrenamiento.utils.PageResponse;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -51,14 +50,21 @@ public class EjercicioServiceImp implements IEjercicioService {
 
     @Override
     @Transactional
-    public Ejercicio save(Ejercicio creditModal) {
-        return null;
+    public Ejercicio save(Ejercicio ejercicio) {
+        return repository.save(ejercicio);
     }
 
     @Override
     @Transactional
-    public Ejercicio update(Ejercicio creditModal) {
-        return null;
+    public Ejercicio update(Ejercicio ejercicio) {
+        Optional<Ejercicio> oApp = findById(ejercicio.getIdEjercicio());
+        if (oApp.isPresent()) {
+            oApp.get().setDscEjercicio(ejercicio.getDscEjercicio());
+            oApp.get().setNombreEjercicio(ejercicio.getNombreEjercicio());
+            return repository.save(ejercicio);
+        } else {
+            return null;
+        }
     }
 
     @Override

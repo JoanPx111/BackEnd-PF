@@ -45,7 +45,7 @@ public class EjercicioController {
         if (ejercicio == null) {
             throw new BadRequestException(ErrorDescription.BAD_REQUEST_ERROR_MODEL);
         } else {
-            return ResponseEntity.status(HttpStatus.OK).body((this.iEjercicioService.save(ejercicio)));
+            return ResponseEntity.status(HttpStatus.OK).body(this.iEjercicioService.save(ejercicio));
         }
     }
     @PutMapping("/remover/{id}")

@@ -22,6 +22,9 @@ public class Ejercicio implements Serializable {
     @ManyToMany(mappedBy = "ejercicios")
     private List<ParteCuerpo> parteCuerpoList;
 
+    public Ejercicio() {
+    }
+
     public Ejercicio(String nombreEjercicio, String dscEjercicio) {
         this.nombreEjercicio = nombreEjercicio;
         this.dscEjercicio = dscEjercicio;
@@ -49,5 +52,16 @@ public class Ejercicio implements Serializable {
 
     public void setDscEjercicio(String dscEjercicio) {
         this.dscEjercicio = dscEjercicio;
+    }
+
+    @Override
+    public String toString() {
+        return "Ejercicio{" +
+                "idEjercicio=" + idEjercicio +
+                ", nombreEjercicio='" + nombreEjercicio + '\'' +
+                ", dscEjercicio='" + dscEjercicio + '\'' +
+                ", tipoEjercicio=" + tipoEjercicio +
+                ", parteCuerpoList=" + parteCuerpoList +
+                '}';
     }
 }
