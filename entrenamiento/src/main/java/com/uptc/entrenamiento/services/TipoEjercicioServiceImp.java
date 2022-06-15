@@ -1,8 +1,8 @@
 package com.uptc.entrenamiento.services;
 
 import com.uptc.entrenamiento.errors.NotFoundException;
-import com.uptc.entrenamiento.models.Ejercicio;
-import com.uptc.entrenamiento.repositories.EjercicioRepository;
+import com.uptc.entrenamiento.models.TipoEjercicio;
+import com.uptc.entrenamiento.repositories.TipoEjercicioRepository;
 import com.uptc.entrenamiento.utils.ErrorDescription;
 import com.uptc.entrenamiento.utils.PageResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,52 +17,48 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class EjercicioServiceImp implements IEjercicioService {
+
+public class TipoEjercicioServiceImp implements ITipoEjercicioService {
     @Autowired
-    private EjercicioRepository repository;
-    @Autowired
-    private ITipoEjercicioService iTipoEjercicioService;
+    private TipoEjercicioRepository repository;
 
     @Override
-    public Iterable<Ejercicio> findByAll() {
+    public Iterable<TipoEjercicio> findByAll() {
         return repository.findAll();
     }
 
     @Override
-    public Optional<Ejercicio> findById(Long id) {
-        Optional<Ejercicio> oApp = repository.findById(id);
+    public Optional<TipoEjercicio> findById(Long id) {
+        Optional<TipoEjercicio> oApp = repository.findById(id);
         if (oApp.isPresent()) {
             return oApp;
         } else {
-            throw new NotFoundException(ErrorDescription.NOT_FOUND_REGISTER_EJERCICIO);
+            throw new NotFoundException(ErrorDescription.NOT_FOUND_REGISTER_TIPO_EJERCICIO);
         }
     }
 
     @Override
     @Transactional
-    public Ejercicio save(Ejercicio ejercicio) {
-        iTipoEjercicioService.findById(ejercicio.getTipoEjercicio().getIdTipoEjercicio()).ifPresent(ejercicio::setTipoEjercicio);
-        return repository.save(ejercicio);
+    public TipoEjercicio save(TipoEjercicio tipoEjercicio) {
+        return repository.save(tipoEjercicio);
     }
 
     @Override
     @Transactional
-    public Ejercicio update(Ejercicio ejercicio) {
-        Optional<Ejercicio> oApp = findById(ejercicio.getIdEjercicio());
+    public TipoEjercicio update(TipoEjercicio ejercicio) {
+        Optional<TipoEjercicio> oApp = findById(ejercicio.getIdTipoEjercicio());
         if (oApp.isPresent()) {
-            oApp.get().setDscEjercicio(ejercicio.getDscEjercicio());
-            oApp.get().setNombreEjercicio(ejercicio.getNombreEjercicio());
-            iTipoEjercicioService.findById(ejercicio.getTipoEjercicio().getIdTipoEjercicio()).ifPresent(oApp.get()::setTipoEjercicio);
+            oApp.get().setDscTipoEjercicio(ejercicio.getDscTipoEjercicio());
             return repository.save(ejercicio);
         } else {
-            throw new NotFoundException(ErrorDescription.NOT_FOUND_REGISTER_EJERCICIO);
+            throw new NotFoundException(ErrorDescription.NOT_FOUND_REGISTER_TIPO_EJERCICIO);
         }
     }
 
     @Override
     @Transactional
     public void delete(Long id) {
-        Optional<Ejercicio> oApp = findById(id);
+        Optional<TipoEjercicio> oApp = findById(id);
         if (oApp.isPresent()) {
             repository.delete(oApp.get());
         }
@@ -70,8 +66,8 @@ public class EjercicioServiceImp implements IEjercicioService {
 
     @Override
     public PageResponse findByAllPage(int page, int size) {
-        Page<Ejercicio> pageTuts = repository.findAll(PageRequest.of(page, size, Sort.by(getOrders())));
-        PageResponse<Ejercicio> pageResponse = new PageResponse<>();
+        Page<TipoEjercicio> pageTuts = repository.findAll(PageRequest.of(page, size, Sort.by(getOrders())));
+        PageResponse<TipoEjercicio> pageResponse = new PageResponse<>();
         pageResponse.setList(pageTuts.getContent());
         pageResponse.setPaginaActual(pageTuts.getNumber());
         pageResponse.setTotal(pageTuts.getTotalElements());
@@ -81,7 +77,7 @@ public class EjercicioServiceImp implements IEjercicioService {
 
     private List<Sort.Order> getOrders() {
         List<Sort.Order> orders = new ArrayList<>();
-        orders.add(new Sort.Order(Sort.Direction.ASC, "idEjercicio"));
+        orders.add(new Sort.Order(Sort.Direction.ASC, "idTipoEjercicio"));
         return orders;
     }
 }

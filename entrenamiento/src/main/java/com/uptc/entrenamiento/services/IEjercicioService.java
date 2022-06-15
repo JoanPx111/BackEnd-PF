@@ -11,9 +11,9 @@ public interface IEjercicioService {
 
     Optional<Ejercicio> findById(Long id);
 
-    Ejercicio save(Ejercicio creditModal);
+    Ejercicio save(Ejercicio ejercicio);
 
-    Ejercicio update(Ejercicio creditModal);
+    Ejercicio update(Ejercicio ejercicio);
 
-    Ejercicio delete(Long id);
+    void delete(Long id);
 }

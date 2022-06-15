@@ -6,6 +6,7 @@ import com.uptc.entrenamiento.models.Ejercicio;
 import com.uptc.entrenamiento.services.IEjercicioService;
 import com.uptc.entrenamiento.utils.ErrorDescription;
 import com.uptc.entrenamiento.utils.PageResponse;
+import com.uptc.entrenamiento.utils.ResponseDescription;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,7 +28,7 @@ public class EjercicioController {
         return ResponseEntity.status(HttpStatus.OK).body(this.iEjercicioService.findById(id).get());
     }
 
-    @GetMapping(params = {"page", "size"})
+    @GetMapping
     public ResponseEntity<PageResponse<Ejercicio>> findByAllPage(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size) {
         if (page < 0 || size <= 0) {
             return ResponseEntity.status(HttpStatus.OK).body(getPageResponse(this.iEjercicioService.findByAllPage(0, 10)));
@@ -44,6 +45,7 @@ public class EjercicioController {
             return ResponseEntity.status(HttpStatus.CREATED).body((this.iEjercicioService.save(ejercicio)));
         }
     }
+
     @PutMapping("/{id}")
     public ResponseEntity<Ejercicio> update(@RequestBody Ejercicio ejercicio) {
         if (ejercicio == null) {
@@ -52,12 +54,13 @@ public class EjercicioController {
             return ResponseEntity.status(HttpStatus.OK).body(this.iEjercicioService.save(ejercicio));
         }
     }
+
     @PutMapping("/remover/{id}")
-    public ResponseEntity<Ejercicio> delete(@PathVariable Long id,@RequestBody Ejercicio ejercicio) {
+    public ResponseEntity<String> delete(@PathVariable Long id, @RequestBody Ejercicio ejercicio) {
         if (id == null) {
             throw new BadRequestException(ErrorDescription.BAD_REQUEST_ERROR_MODEL);
         } else {
-            return ResponseEntity.status(HttpStatus.OK).body((this.iEjercicioService.delete(id)));
+            return ResponseEntity.status(HttpStatus.OK).body(ResponseDescription.REMOVE);
         }
     }
 

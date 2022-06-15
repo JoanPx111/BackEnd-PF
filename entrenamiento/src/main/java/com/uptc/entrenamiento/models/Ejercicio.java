@@ -50,6 +50,14 @@ public class Ejercicio implements Serializable {
         this.dscEjercicio = dscEjercicio;
     }
 
+    public TipoEjercicio getTipoEjercicio() {
+        return tipoEjercicio;
+    }
+
+    public void setTipoEjercicio(TipoEjercicio tipoEjercicio) {
+        this.tipoEjercicio = tipoEjercicio;
+    }
+
     @Override
     public String toString() {
         return "Ejercicio{" +
