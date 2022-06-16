@@ -10,11 +10,11 @@ public class GrupoDeportivo implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long cscIntento;
     @ManyToOne
-    @JoinColumn(name = "FK_ESPECIALISTA_GRUPODEPORTIVO", nullable = false)
+    @JoinColumn(name = "idEspecialista", nullable = false)
     private Especialista especialista;
 
     @ManyToOne
-    @JoinColumn(name = "FK_ESPECIALISTA_GRUPODEPORTIVO_02", nullable = false)
+    @JoinColumn(name = "EspIdEspecialista", nullable = false)
     private Especialista espIdEspecialista;
     @Column(nullable = false)
     private Integer intento;
