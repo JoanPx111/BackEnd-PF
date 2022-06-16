@@ -11,12 +11,13 @@ public class Rutina implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Date dia;
-
+    @Id
     @ManyToOne
-    @JoinColumn(name = "idEspecialista",nullable = false)
+    @JoinColumn(name = "idEspecialista")
     Especialista especialista;
+    @Id
     @ManyToOne
-    @JoinColumn(name = "idEjercicio",nullable = false)
+    @JoinColumn(name = "idEjercicio")
     Ejercicio ejercicio;
 
     @Column(nullable = false)
