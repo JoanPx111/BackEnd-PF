@@ -1,6 +1,8 @@
 package com.uptc.entrenamiento.controllers;
 
 import com.sun.istack.NotNull;
+import com.uptc.entrenamiento.controllers.utils.dto.EjercicioDto;
+import com.uptc.entrenamiento.controllers.utils.mappers.MapStructMapper;
 import com.uptc.entrenamiento.errors.BadRequestException;
 import com.uptc.entrenamiento.models.Ejercicio;
 import com.uptc.entrenamiento.services.IEjercicioService;
@@ -12,24 +14,29 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @CrossOrigin(origins = {"http://localhost:4200", "http://localhost"})
 @RestController
 @RequestMapping("/ejercicio")
 public class EjercicioController {
     @Autowired
     private IEjercicioService iEjercicioService;
+    @Autowired
+    private MapStructMapper mapStructMapper;
 
     @GetMapping("/all")
-    public ResponseEntity<Iterable<Ejercicio>> findByAll() {
-        return ResponseEntity.status(HttpStatus.OK).body(this.iEjercicioService.findByAll());
+    public ResponseEntity<Iterable<EjercicioDto>> findByAll() {
+        return ResponseEntity.status(HttpStatus.OK).body(mapStructMapper.ejercicioDtos(this.iEjercicioService.findByAll()));
     }
+
     @GetMapping("/{id}")
-    public ResponseEntity<Ejercicio> findById(@PathVariable Long id) {
-        return ResponseEntity.status(HttpStatus.OK).body(this.iEjercicioService.findById(id).get());
+    public ResponseEntity<EjercicioDto> findById(@PathVariable Long id) {
+        return ResponseEntity.status(HttpStatus.OK).body(mapStructMapper.ejercicioDto(this.iEjercicioService.findById(id).get()));
     }
 
     @GetMapping
-    public ResponseEntity<PageResponse<Ejercicio>> findByAllPage(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size) {
+    public ResponseEntity<PageResponse<EjercicioDto>> findByAllPage(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size) {
         if (page < 0 || size <= 0) {
             return ResponseEntity.status(HttpStatus.OK).body(getPageResponse(this.iEjercicioService.findByAllPage(0, 10)));
         } else {
@@ -38,25 +45,25 @@ public class EjercicioController {
     }
 
     @PostMapping
-    public ResponseEntity<Ejercicio> save(@RequestBody Ejercicio ejercicio) {
+    public ResponseEntity<EjercicioDto> save(@RequestBody Ejercicio ejercicio) {
         if (ejercicio == null) {
             throw new BadRequestException(ErrorDescription.BAD_REQUEST_ERROR_MODEL);
         } else {
-            return ResponseEntity.status(HttpStatus.CREATED).body((this.iEjercicioService.save(ejercicio)));
+            return ResponseEntity.status(HttpStatus.CREATED).body(mapStructMapper.ejercicioDto(this.iEjercicioService.save(ejercicio)));
         }
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Ejercicio> update(@RequestBody Ejercicio ejercicio) {
+    public ResponseEntity<EjercicioDto> update(@RequestBody Ejercicio ejercicio) {
         if (ejercicio == null) {
             throw new BadRequestException(ErrorDescription.BAD_REQUEST_ERROR_MODEL);
         } else {
-            return ResponseEntity.status(HttpStatus.OK).body(this.iEjercicioService.save(ejercicio));
+            return ResponseEntity.status(HttpStatus.OK).body(mapStructMapper.ejercicioDto(this.iEjercicioService.save(ejercicio)));
         }
     }
 
     @PutMapping("/remover/{id}")
-    public ResponseEntity<String> delete(@PathVariable Long id, @RequestBody Ejercicio ejercicio) {
+    public ResponseEntity<String> delete(@PathVariable Long id) {
         if (id == null) {
             throw new BadRequestException(ErrorDescription.BAD_REQUEST_ERROR_MODEL);
         } else {
@@ -65,9 +72,9 @@ public class EjercicioController {
     }
 
     @NotNull
-    private PageResponse<Ejercicio> getPageResponse(PageResponse<Ejercicio> pageAct) {
-        PageResponse<Ejercicio> response = new PageResponse<>();
-        response.setList(pageAct.getList());
+    private PageResponse<EjercicioDto> getPageResponse(PageResponse<Ejercicio> pageAct) {
+        PageResponse<EjercicioDto> response = new PageResponse<>();
+        response.setList((List<EjercicioDto>) mapStructMapper.ejercicioDtos(pageAct.getList()));
         response.setTotalPagina(pageAct.getTotalPagina());
         response.setTotal(pageAct.getTotal());
         response.setTotalPagina(pageAct.getTotalPagina());

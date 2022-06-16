@@ -1,41 +1,26 @@
-package com.uptc.entrenamiento.models;
+package com.uptc.entrenamiento.controllers.utils.dto;
 
-import javax.persistence.*;
-import java.io.Serializable;
+import com.uptc.entrenamiento.models.ParteCuerpo;
+
 import java.util.List;
 
-@Entity
-@Table(name = "EJERCICIOS")
-public class Ejercicio implements Serializable {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class EjercicioDto {
     private Long idEjercicio;
-    @Column(nullable = true, length = 50)
     private String nombreEjercicio;
-    @Column(nullable = true, length = 200)
     private String dscEjercicio;
-
-    @ManyToOne
-    @JoinColumn(name = "idTipoEjercicio")
-    private TipoEjercicio tipoEjercicio;
-
-    @ManyToMany(mappedBy = "ejercicios")
+    private TipoEjercicioDto tipoEjercicio;
     private List<ParteCuerpo> parteCuerpoList;
 
-    public Ejercicio() {
+    public EjercicioDto() {
     }
 
-    public Ejercicio(String nombreEjercicio, String dscEjercicio) {
+    public EjercicioDto(String nombreEjercicio, String dscEjercicio) {
         this.nombreEjercicio = nombreEjercicio;
         this.dscEjercicio = dscEjercicio;
     }
 
     public Long getIdEjercicio() {
         return idEjercicio;
-    }
-
-    public void setIdEjercicio(Long idEjercicio) {
-        this.idEjercicio = idEjercicio;
     }
 
     public String getNombreEjercicio() {
@@ -54,11 +39,11 @@ public class Ejercicio implements Serializable {
         this.dscEjercicio = dscEjercicio;
     }
 
-    public TipoEjercicio getTipoEjercicio() {
+    public TipoEjercicioDto getTipoEjercicio() {
         return tipoEjercicio;
     }
 
-    public void setTipoEjercicio(TipoEjercicio tipoEjercicio) {
+    public void setTipoEjercicio(TipoEjercicioDto tipoEjercicio) {
         this.tipoEjercicio = tipoEjercicio;
     }
 
