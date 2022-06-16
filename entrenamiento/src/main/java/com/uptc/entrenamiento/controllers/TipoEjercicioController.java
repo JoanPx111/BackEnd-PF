@@ -9,6 +9,7 @@ import com.uptc.entrenamiento.services.ITipoEjercicioService;
 import com.uptc.entrenamiento.utils.ErrorDescription;
 import com.uptc.entrenamiento.utils.PageResponse;
 import com.uptc.entrenamiento.utils.ResponseDescription;
+import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +20,7 @@ import java.util.List;
 @CrossOrigin(origins = {"http://localhost:4200", "http://localhost"})
 @RestController
 @RequestMapping("/tipo-ejercicio")
+@Api(value = "Servicio tipos de ejercicio", description = "Servicio tipos de ejercicio")
 public class TipoEjercicioController {
     @Autowired
     private ITipoEjercicioService iTipoEjercicioService;
