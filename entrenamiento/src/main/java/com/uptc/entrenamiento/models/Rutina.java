@@ -9,7 +9,7 @@ import java.util.List;
 @Table(name = "RUTINAS")
 public class Rutina implements Serializable {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(nullable = false, length = 6)
     private Date dia;
     @Id
     @ManyToOne
