@@ -69,6 +69,11 @@ public class EjercicioServiceImp implements IEjercicioService {
     }
 
     @Override
+    public Iterable<Ejercicio> buscarPorNombre2(String nombreEjercicio) {
+        return repository.buscarPorNombre2(nombreEjercicio);
+    }
+
+    @Override
     public PageResponse findByAllPage(int page, int size) {
         Page<Ejercicio> pageTuts = repository.findAll(PageRequest.of(page, size, Sort.by(getOrders())));
         PageResponse<Ejercicio> pageResponse = new PageResponse<>();

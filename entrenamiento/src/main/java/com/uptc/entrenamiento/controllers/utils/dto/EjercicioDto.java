@@ -23,6 +23,10 @@ public class EjercicioDto {
         return idEjercicio;
     }
 
+  /*  public void setIdEjercicio(Long idEjercicio) {
+        this.idEjercicio = idEjercicio;
+    }*/
+
     public String getNombreEjercicio() {
         return nombreEjercicio;
     }

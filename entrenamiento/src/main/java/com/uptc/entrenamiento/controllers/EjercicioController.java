@@ -80,4 +80,9 @@ public class EjercicioController {
         response.setTotalPagina(pageAct.getTotalPagina());
         return response;
     }
+
+    @GetMapping("/filter/{name}")
+    public ResponseEntity<Iterable<EjercicioDto>> findById(@PathVariable String name) {
+        return ResponseEntity.status(HttpStatus.OK).body(mapStructMapper.ejercicioDtos(this.iEjercicioService.buscarPorNombre2(name)));
+    }
 }
