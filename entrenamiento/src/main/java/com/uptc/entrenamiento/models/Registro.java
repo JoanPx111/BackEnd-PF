@@ -14,10 +14,6 @@ public class Registro implements Serializable {
     @Column(nullable = true, length = 6)
     private Date fechaRegistro;
 
-    @OneToOne
-    @JoinColumn(name = "FK_ESPECIALISTA_REGISTRO")
-    Especialista especialista;
-
     public Registro() {
     }
 
@@ -43,9 +39,5 @@ public class Registro implements Serializable {
 
     public void setFechaRegistro(Date fechaRegistro) {
         this.fechaRegistro = fechaRegistro;
-    }
-
-    public void setEspecialista(Especialista especialista) {
-        this.especialista = especialista;
     }
 }

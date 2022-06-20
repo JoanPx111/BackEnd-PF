@@ -16,7 +16,9 @@ public class Especialista implements Serializable {
     private Date fechaDeNacimiento;
     @Column(nullable = false, length = 12)
     private String tarjetaProfesional;
-    @OneToOne(mappedBy = "especialista", cascade = CascadeType.ALL)
+
+    @OneToOne
+    @JoinColumn(name = "FK_ESPECIALISTA_REGISTRO")
     private Registro registro;
 
     public Especialista(String nombre, Date fechaDeNacimiento, String tarjetaProfesional, Registro registro) {
